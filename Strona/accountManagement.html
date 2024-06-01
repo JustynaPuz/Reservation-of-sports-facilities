@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="HTML, CSS">
+    <meta name="description" content="Strona do rezerwacji kortow tenisowych i biletow na lodowisko">
+    <title>Rezerwacja obiektow sportowych</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .sidebar {
+            background-color: #333;
+            color: white;
+            width: 200px;
+            height: 100vh;
+            position: fixed;
+            padding: 20px;
+            top: 0;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #555;
+        }
+
+        .main-content {
+            margin-left: 220px;
+            padding: 40px;
+            width: calc(100% - 220px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 50%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 200px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Rezerwacja obiektów sportowych</h1>
+    </div>
+    <div class="sidebar">
+        <a href="#">Strona główna</a>
+        <a href="korty.html" class="active">Korty tenisowe</a>
+        <a href="lodowisko.html">Lodowisko</a>
+        <a href="login.html">Zaloguj</a>
+        <a href="register.html">Zarejestruj się</a>
+    </div>
+
+    <div class="main-content">
+        <h2>Zmień hasło</h2>
+        <form action="Potwierdzanie zmiany hasła" method="post">
+            <div class="form-group">
+                <label for="username">Stare hasło:</label>
+                <input type="text" id="oldPassword" name="newPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Nowe hasło:</label>
+                <input type="text" id="newPassword" name="newPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Powtórz nowe hasło:</label>
+                <input type="text" id="newPassword" name="newPassword" required>
+            </div>
+
+            <button type="Zatwierdź">Potwierdź</button>
+        </form>
+
+        <form>
+            <label for="dataSelect">Wybierz dane do zmiany:</label>
+            <select id="dataSelect" onchange="updateInput()">
+                <option value="Email">Email</option>
+                <option value="Numer telefonu">Numer telefonu</option>
+            </select>
+            <br><br>
+            <input type="text" id="dataInput" placeholder="Wprowadź nowe dane">
+            <br><br>
+            <button type="button" onclick="alert('Dane zostały zmienione!')">Potwierdź zmianę</button>
+        </form>
+
+    </div>
+
+
+</body>
+
+<script>
+    function updateInput() {
+        var selection = document.getElementById("dataSelect").value;
+        var inputField = document.getElementById("dataInput");
+        inputField.placeholder = "Wprowadź nowe " + selection;
+    }
+</script>
+
+</html>

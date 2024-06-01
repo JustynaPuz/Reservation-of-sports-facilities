@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="HTML, CSS">
+    <meta name="description" content="Strona do rezerwacji kortow tenisowych i biletow na lodowisko">
+    <title>Rezerwacja obiektow sportowych</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .sidebar {
+            background-color: #333;
+            color: white;
+            width: 200px;
+            height: 100vh;
+            position: fixed;
+            padding: 20px;
+            top: 0;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #555;
+        }
+
+        .main-content {
+            margin-left: 220px;
+            padding: 40px;
+            width: calc(100% - 220px);
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th,
+        td {
+            padding: 7px;
+            border: 1px solid #ccc;
+        }
+
+        thead {
+            background-color: #f4f4f4;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #eee;
+        }
+
+        tbody td {
+            cursor: pointer;
+
+        }
+
+        tbody td:hover {
+            background-color: #e0e0e0;
+        }
+
+        tbody td:not(:empty) {
+            cursor: default;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Rezerwacja obiektów sportowych</h1>
+    </div>
+    <div class="sidebar">
+        <a href="index.html">Strona główna</a>
+        <a href="korty.html" class="active">Korty tenisowe</a>
+        <a href="lodowisko.html">Lodowisko</a>
+        <a href="login.html">Zaloguj</a>
+        <a href="register.html">Zarejestruj się</a>
+    </div>
+    <div class="main-content">
+        <h2>Harmonogram lodowiska</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Godzina
+                        Dzień</th>
+                    <th>Poniedziałek</th>
+                    <th>Wtorek</th>
+                    <th>Środa</th>
+                    <th>Czwartek</th>
+                    <th>Piątek</th>
+                    <th>Sobota</th>
+                    <th>Niedziela</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>8.00</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+
+                </tr>
+                <tr>
+                    <td>9.00</td>
+
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+
+                </tr>
+                <tr>
+                    <td>10.00</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td>11.00</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td>12.00</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td>13.00</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1">Niedostępne</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td>14.00</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td>15.00</td>
+                    <td colspan="7">Przerwa techniczna</td>
+
+                </tr>
+                <tr>
+                    <td>16.00</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td>17.00</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td>18.00</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td>19.00</td>
+                    <td colspan="7">Przerwa techniczna</td>
+                </tr>
+                <tr>
+                    <td>20.00</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td>21.00</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+                <tr>
+                    <td>22.00</td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                    <td colspan="1"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cells = document.querySelectorAll('.main-content tbody td');
+            cells.forEach(cell => {
+                cell.addEventListener('click', function () {
+                    if (cell.innerText.trim() === "") {
+                        const confirmReserve = confirm("Czy chcesz zarezerwować ten slot?");
+                        if (confirmReserve) {
+                            cell.innerText = "Zarezerwowano";
+                            cell.style.backgroundColor = '#007BFF';
+                            cell.style.color = 'white';
+                        }
+                    } else {
+                        alert("Slot jest już zajęty lub niedostępny.");
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+
+</html>
