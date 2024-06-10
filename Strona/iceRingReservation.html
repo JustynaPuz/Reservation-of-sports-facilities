@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="HTML, CSS">
+    <meta name="description" content="Strona do rezerwacji kortów tenisowych i biletów na lodowisko">
+    <title>Rezerwacja obiektów sportowych</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            padding-left: 100px;
+        }
+
+        .sidebar {
+            background-color: #333;
+            color: white;
+            width: 200px;
+            height: 100vh;
+            position: fixed;
+            padding: 20px;
+            top: 0;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #555;
+        }
+
+        .main-content {
+            margin-left: 300px;
+            padding: 20px;
+        }
+
+        form>div {
+            margin-bottom: 15px;
+            /* Adds spacing between form fields */
+        }
+
+        input[readonly] {
+            background-color: #f0f0f0;
+            /* Makes read-only fields visually distinct */
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Rezerwacja obiektów sportowych</h1>
+    </div>
+    <div class="sidebar">
+        <a href="indexAfterLogin.html" class="active">Strona główna</a>
+        <a href="korty.html">Korty tenisowe</a>
+        <a href="lodowisko.html">Lodowisko</a>
+        <a href="userReservationsScreen.php">Rezerwacje</a>
+        <a href="accountManagement.html">Profil</a>
+        <a href="logout.php">Wyloguj</a>
+    </div>
+    <div class="main-content">
+        <h1>Formularz rezerwacji kortu</h1>
+        <form action="iceRingReservation.php" method="post">
+            <div>
+                <label for="court">Numer kortu:</label>
+                <input type="text" id="court" name="court" readonly>
+            </div>
+            <div>
+                <label for="date">Data:</label>
+                <input type="date" id="date" name="date" readonly>
+            </div>
+            <div>
+                <label for="time">Godzina:</label>
+                <input type="text" id="time" name="time" readonly>
+            </div>
+            <div>
+                <label for="duration">Czas trwania (w minutach, np. 30, 60, 90):</label>
+                <input type="number" id="duration" name="duration" required min="30" max="90" step="30">
+            </div>
+            <button type="submit">Rezerwuj</button>
+        </form>
+    </div>
+
+    <script>
+        // Skrypt do wypełniania formularza na podstawie parametrów z URL
+        window.onload = function () {
+            const params = new URLSearchParams(window.location.search);
+            document.getElementById('court').value = params.get('court');
+            document.getElementById('date').value = params.get('date');
+            document.getElementById('time').value = params.get('time');
+        };
+    </script>
+</body>
+
+</html>

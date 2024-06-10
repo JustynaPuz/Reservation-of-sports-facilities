@@ -1,11 +1,12 @@
 <?php
+session_start();
 $servername = "localhost";
-$username = "AdamJustynaRezerwacje";
+$usernameDb = "AdamJustynaRezerwacje";
 $password = "Pwr1234BazyDanych";
 $dbname = "rezerwacjaObiektow";
 
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $usernameDb, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -14,6 +15,8 @@ if ($conn->connect_error) {
 
 $username = $_POST['username'];
 $password = $_POST['password'];
+$_SESSION['username'] = $username;
+
 
 // Zabezpieczenie przed SQL Injection
 $username = $conn->real_escape_string($username);
@@ -27,11 +30,11 @@ if ($result->num_rows > 0) {
     // Sprawdzenie hasła
     $row = $result->fetch_assoc();
     if ($password === $row['Haslo']) {
-        header("Location: Profile.html");
+        header("Location: indexAfterLogin.html");
         $conn->close();
-        exit; 
+        exit;
 
-      
+
     } else {
         echo "Nieprawidłowe hasło";
     }

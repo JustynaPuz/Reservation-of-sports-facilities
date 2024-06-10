@@ -2,7 +2,7 @@
 
 
 
-if ( ! filter_var($_POST["login"], FILTER_VALIDATE_EMAIL)) {
+if (!filter_var($_POST["login"], FILTER_VALIDATE_EMAIL)) {
     die("Valid email is required");
 }
 
@@ -48,10 +48,10 @@ $sql = "INSERT INTO `Użytkownik zalogowany` (`Imie`, `Nazwisko`, `Login`, `Hasl
 
 
 if ($conn->query($sql) === TRUE) {
-    
+
     header("Location: register-success.html");
     $conn->close();
-    exit; 
+    exit;
 
 
 } else {

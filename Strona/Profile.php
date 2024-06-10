@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="pl">
 
 <head>
@@ -69,4 +69,4 @@
 
 </body>
 
-</html>
+</html> -->

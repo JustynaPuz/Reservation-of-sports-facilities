@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="HTML, CSS">
-    <meta name="description" content="Strona do rezerwacji kortow tenisowych i biletow na lodowisko">
-    <title>Rezerwacja obiektow sportowych</title>
+    <meta name="description" content="Strona do rezerwacji kortów tenisowych i biletów na lodowisko">
+    <title>Rezerwacja obiektów sportowych</title>
     <style>
         body {
             margin: 0;
@@ -84,6 +84,7 @@
 </head>
 
 <body>
+    <?php session_start(); ?> <!-- Początek sesji -->
     <div class="header">
         <h1>Rezerwacja obiektów sportowych</h1>
     </div>
@@ -91,55 +92,45 @@
         <a href="indexAfterLogin.html">Strona główna</a>
         <a href="korty.html">Korty tenisowe</a>
         <a href="lodowisko.html">Lodowisko</a>
-        <a href="userReservationsScreen.php">Rezerwacje</a>
-        <a href="accountManagement.html" class="active">Profil</a>
+        <a href="userReservations.html" class="active">Rezerwacje</a>
+        <a href="accountManagement.html">Profil</a>
         <a href="logout.php">Wyloguj</a>
-
     </div>
-
     <div class="main-content">
-        <h2>Zmień hasło</h2>
-        <form action="accountManagement.php" method="post">
+        <h2>Zarządzaj swoimi rezerwacjami</h2>
+        <form action="userReservations.php" method="post">
             <div class="form-group">
-                <label for="oldPassword">Stare hasło:</label>
-                <input type="password" id="oldPassword" name="oldPassword" required>
+                <label for="reservationType">Wybierz typ rezerwacji:</label>
+                <select name="reservationType" id="reservationType">
+                    <option value="tennis">Korty tenisowe</option>
+                    <option value="iceRink">Lodowisko</option>
+                </select>
+                <button type="submit">Pokaż rezerwacje</button>
             </div>
-            <div class="form-group">
-                <label for="newPassword">Nowe hasło:</label>
-                <input type="password" id="newPassword" name="newPassword" required>
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword">Powtórz nowe hasło:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
-            </div>
-            <button type="submit">Potwierdź</button>
-
         </form>
 
-        <form action="accountManagementEmailNumber.php" method="post">
-            <label for="dataSelect">Wybierz dane do zmiany:</label>
-            <select id="dataSelect" name="dataType" onchange="updateInput()" required>
-
-                <option value="Email">Email</option>
-                <option value="Numer telefonu">Numer telefonu</option>
-            </select>
-            <br><br>
-            <input type="text" id="dataInput" name="dataInput" placeholder="Wprowadź nowe dane" required>
-            <br><br>
-            <button type="submit">Potwierdź zmianę</button>
-        </form>
+        <?php
+        if (!empty($_SESSION['reservations'])) {
+            echo "<h3>Aktywne rezerwacje:</h3><ul>";
+            foreach ($_SESSION['reservations'] as $reservation) {
+                if (isset($reservation['Termin Kortu'], $reservation['Status'], $reservation['ID'], $reservation['Numer Kortu'])) {
+                    echo "<li>";
+                    echo "Rezerwacja na: " . htmlspecialchars($reservation['Termin Kortu']);
+                    echo ", Numer Kortu: " . htmlspecialchars($reservation['Numer Kortu']);
+                    echo ", Status: " . htmlspecialchars($reservation['Status']);
+                    echo " - <a href='cancelReservation.php?reservationId=" . urlencode($reservation['ID']) . "&termin=" . urlencode($reservation['Termin Kortu']) . "&numerKortu=" . urlencode($reservation['Numer Kortu']) . "'>Anuluj</a>";
+                    echo "</li>";
+                } else {
+                    echo "<li>Niekompletna informacja o rezerwacji.</li>";
+                }
+            }
+            echo "</ul>";
+        } else {
+            echo "<p>Brak aktywnych rezerwacji.</p>";
+        }
+        ?>
 
     </div>
-
-
 </body>
-
-<script>
-    function updateInput() {
-        var selection = document.getElementById("dataSelect").value;
-        var inputField = document.getElementById("dataInput");
-        inputField.placeholder = "Wprowadź nowy " + selection;
-    }
-</script>
 
 </html>

@@ -1,5 +1,5 @@
 <?php
-$servername = "localhost";  
+$servername = "localhost";
 $username = "AdamJustynaRezerwacje";
 $password = "Pwr1234BazyDanych";
 $dbname = "rezerwacjaObiektow";
@@ -17,4 +17,4 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-return $conn; 
+return $conn;
