@@ -51,6 +51,17 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $reservationId);
 $stmt->execute();
 
+// Zmień zajętość na 0 dla odpowiednich 
+$updateSql = "UPDATE `Termin Kortu` SET `Zajętość` = 0 WHERE `Zajętość` = 1 AND `Termin` ? AND `Numer kortu` = ?";
+$updateStmt = $conn->prepare($updateSql);
+$updateStmt->bind_param("ssi", $startTime, $actualEndTime, $NumberOfTickets);
+if ($updateStmt->execute()) {
+    echo "Rezerwacja została pomyślnie dokonana.";
+} else {
+    echo "Błąd podczas aktualizacji terminów: " . $conn->error;
+}
+$updateStmt->close();
+
 if ($stmt->affected_rows > 0) {
     echo "Rezerwacja została anulowana.";
 } else {

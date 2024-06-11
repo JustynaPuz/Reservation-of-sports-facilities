@@ -54,5 +54,5 @@ $_SESSION['reservations'] = $reservations;
 
 $stmt->close();
 $conn->close();
-header('Location: userReservationsScreen.php');
+header('Location:userReservationsScreen.php');
 ?>

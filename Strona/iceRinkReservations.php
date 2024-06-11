@@ -13,6 +13,7 @@ $conn = new mysqli($servername, $dbUsername, $dbPassword, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
 // Pobranie nazwy użytkownika z sesji
 $username = $_SESSION['username'];
 
@@ -30,43 +31,39 @@ if (!$user) {
 
 $userId = $user['ID'];
 
-
 // Pobranie danych z formularza
-$KortyNumerKortu = $_POST['court'];
-$TerminKortu = $_POST['date'] . ' ' . $_POST['time'];
-$duration = intval($_POST['duration']); // w minutach
+$dateTime = $_POST['date'] . ' ' . $_POST['time'];
 
-// Obliczenie czasu zakończenia
-$startTime = date('Y-m-d H:i:s', strtotime($TerminKortu));
-$actualEndTime = date('Y-m-d H:i:s', strtotime($startTime) + 60 * 60 - 30 * 60);
+// Obliczenie czasu rozpoczęcia
+$startTime = date('Y-m-d H:i:s', strtotime($dateTime));
 
 // Zapytanie SQL sprawdzające dostępność
-$sql = "SELECT COUNT(*) FROM `Termin Kortu` WHERE `Zajętość` = 1 AND `Termin` BETWEEN ? AND ? AND `Numer kortu` = ?";
+$sql = "SELECT `Zajętość` FROM `Termin lodowiska` WHERE `Termin` = ?";
 $stmt = $conn->prepare($sql);
 if (!$stmt) {
     die('MySQL prepare error: ' . $conn->error);
 }
-$stmt->bind_param("ssi", $startTime, $actualEndTime, $KortyNumerKortu);
+$stmt->bind_param("s", $startTime);
 $stmt->execute();
 $result = $stmt->get_result();
-$count = $result->fetch_array()[0];
+$availability = $result->fetch_assoc()['Zajętość'];
 
-
-if ($count > 0) {
-    echo "Niestety, wybrany slot jest już zajęty.";
+// Sprawdzenie, czy jest dostępne miejsce
+if ($availability <= 0) {
+    echo "Niestety, nie ma wolnych miejsc na ten termin.";
 } else {
-    echo "Slot jest wolny - można dokonać rezerwacji.";
+    echo "Miejsce dostępne - można dokonać rezerwacji.";
 
     // Kod do dodania rezerwacji do bazy danych
-    $insertSql = "INSERT INTO `Rezerwacja kortu tenisowego` (`Termin Kortu`, Status, `Użytkownik zalogowanyID`, `KortyNumer kortu`) VALUES (?, 'Aktywna', ?, ?)";
+    $insertSql = "INSERT INTO `Rezerwacja biletu na lodowisko` (`Status`, `Użytkownik zalogowanyID`, `Termin lodowiska`) VALUES ('Aktywna', ?, ?)";
     $insertStmt = $conn->prepare($insertSql);
-    $insertStmt->bind_param("sii", $startTime, $userId, $KortyNumerKortu);
+    $insertStmt->bind_param("is", $userId, $startTime);
     if ($insertStmt->execute()) {
         echo "Rezerwacja została dodana.";
-        // Zmień zajętość na 1 dla odpowiednich 
-        $updateSql = "UPDATE `Termin Kortu` SET `Zajętość` = 1 WHERE `Zajętość` = 0 AND `Termin` BETWEEN ? AND ? AND `Numer kortu` = ?";
+        // Zmień zajętość na odpowiednią ilość
+        $updateSql = "UPDATE `Termin lodowiska` SET `Zajętość` = `Zajętość` - 1 WHERE `Termin` = ?";
         $updateStmt = $conn->prepare($updateSql);
-        $updateStmt->bind_param("ssi", $startTime, $actualEndTime, $KortyNumerKortu);
+        $updateStmt->bind_param("s", $startTime);
         if ($updateStmt->execute()) {
             echo "Rezerwacja została pomyślnie dokonana.";
         } else {
@@ -77,8 +74,6 @@ if ($count > 0) {
         echo "Błąd podczas dodawania rezerwacji: " . $conn->error;
     }
     $insertStmt->close();
-
-
 }
 
 $stmt->close();

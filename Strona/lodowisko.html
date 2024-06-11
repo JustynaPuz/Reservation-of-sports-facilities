@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="HTML, CSS">
-    <meta name="description" content="Strona do rezerwacji kortow tenisowych i biletow na lodowisko">
-    <title>Rezerwacja obiektow sportowych</title>
+    <meta name="description" content="Strona do rezerwacji kortów tenisowych i biletów na lodowisko">
+    <title>Rezerwacja obiektów sportowych</title>
     <style>
         body {
             margin: 0;
@@ -51,14 +51,14 @@
         }
 
         table {
-            width: 80%;
+            width: 100%;
             border-collapse: collapse;
             text-align: center;
         }
 
         th,
         td {
-            padding: 7px;
+            padding: 6px;
             border: 1px solid #ccc;
         }
 
@@ -72,15 +72,23 @@
 
         tbody td {
             cursor: pointer;
-
         }
 
         tbody td:hover {
             background-color: #e0e0e0;
         }
 
-        tbody td:not(:empty) {
-            cursor: default;
+        tbody td.niedostepne {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        tbody td.przerwa {
+            background-color: #ffd700;
+            color: #333;
+            cursor: not-allowed;
             pointer-events: none;
         }
     </style>
@@ -100,11 +108,14 @@
     </div>
     <div class="main-content">
         <h2>Harmonogram lodowiska</h2>
-        <table border="1">
+        <form id="weekForm">
+            <label for="weekSelector">Wybierz tydzień:</label>
+            <input type="week" id="weekSelector" name="week" required onchange="generateSchedule()">
+        </form>
+        <table id="scheduleTable" border="1">
             <thead>
                 <tr>
-                    <th>Godzina
-                        Dzień</th>
+                    <th>Godzina</th>
                     <th>Poniedziałek</th>
                     <th>Wtorek</th>
                     <th>Środa</th>
@@ -112,176 +123,79 @@
                     <th>Piątek</th>
                     <th>Sobota</th>
                     <th>Niedziela</th>
-
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>8.00</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-
-                </tr>
-                <tr>
-                    <td>9.00</td>
-
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-
-                </tr>
-                <tr>
-                    <td>10.00</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
-                <tr>
-                    <td>11.00</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
-                <tr>
-                    <td>12.00</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
-                <tr>
-                    <td>13.00</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1">Niedostępne</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
-                <tr>
-                    <td>14.00</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
-                <tr>
-                    <td>15.00</td>
-                    <td colspan="7">Przerwa techniczna</td>
-
-                </tr>
-                <tr>
-                    <td>16.00</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
-                <tr>
-                    <td>17.00</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
-                <tr>
-                    <td>18.00</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
-                <tr>
-                    <td>19.00</td>
-                    <td colspan="7">Przerwa techniczna</td>
-                </tr>
-                <tr>
-                    <td>20.00</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
-                <tr>
-                    <td>21.00</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
-                <tr>
-                    <td>22.00</td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                    <td colspan="1"></td>
-                </tr>
+                <!-- Harmonogram zostanie wygenerowany tutaj -->
             </tbody>
         </table>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const cells = document.querySelectorAll('.main-content tbody td');
-            cells.forEach(cell => {
-                cell.addEventListener('click', function () {
-                    if (cell.innerText.trim() === "") {
-                        const confirmReserve = confirm("Czy chcesz zarezerwować ten slot?");
-                        if (confirmReserve) {
-                            cell.innerText = "Zarezerwowano";
-                            cell.style.backgroundColor = '#007BFF';
-                            cell.style.color = 'white';
+            document.getElementById('weekSelector').addEventListener('change', generateSchedule);
+            generateSchedule(); // Initial call to populate the table
+        });
+
+        function getMondayOfSelectedWeek(weekValue) {
+            const [year, week] = weekValue.split('-W');
+            const firstDayOfYear = new Date(year, 0, 1); // Pierwszy dzień roku
+            const days = (parseInt(week, 10) - 1) * 7;
+            firstDayOfYear.setDate(firstDayOfYear.getDate() + days);
+
+            const dayOfWeek = firstDayOfYear.getDay(); // Dzień tygodnia dla 1 stycznia
+            const offset = (dayOfWeek === 0 ? 6 : dayOfWeek - 1); // Ajust for Monday start
+            firstDayOfYear.setDate(firstDayOfYear.getDate() - offset);
+
+            return firstDayOfYear;
+        }
+
+
+        function generateSchedule() {
+            const tableBody = document.querySelector('#scheduleTable tbody');
+            tableBody.innerHTML = ''; // Czyszczenie istniejących wierszy tabeli
+            const selectedWeek = document.getElementById('weekSelector').value;
+            const startDate = getMondayOfSelectedWeek(selectedWeek);
+
+            for (let i = 0; i < 15; i++) {
+                const hour = 8 + i; // Godziny otwarcia od 8:00 do 22:00
+                const timeSlot = `${hour}:00`;
+                const row = tableBody.insertRow();
+                const timeCell = row.insertCell(0);
+                timeCell.textContent = timeSlot;
+
+                for (let j = 1; j <= 7; j++) {
+                    const dayCell = row.insertCell(j);
+                    const dayOffset = j;
+                    const reservationDate = new Date(startDate);
+                    reservationDate.setDate(startDate.getDate() + dayOffset);
+
+                    if ((j <= 5 && (hour >= 8 && hour <= 11)) || hour === 15 || hour === 19) {
+                        if (hour === 15 || hour === 19) {
+                            dayCell.textContent = 'Przerwa techniczna';
+                            dayCell.className = 'przerwa';
+                        } else {
+                            dayCell.textContent = 'Niedostępne';
+                            dayCell.className = 'niedostepne';
                         }
                     } else {
-                        alert("Slot jest już zajęty lub niedostępny.");
+                        dayCell.textContent = 'Wolny';
+                        dayCell.className = 'wolny';
+                        addClickHandler(dayCell, hour, reservationDate);
                     }
-                });
+                }
+            }
+        }
+
+
+        function addClickHandler(cell, time, reservationDate) {
+            cell.addEventListener('click', function () {
+                const queryParams = `time=${encodeURIComponent(`${time}:00`)}&date=${encodeURIComponent(reservationDate.toISOString().split('T')[0])}`;
+                window.location.href = `iceRinkReservations.html?${queryParams}`;
             });
-        });
+        }
+
+
     </script>
-
 </body>
-
 
 </html>

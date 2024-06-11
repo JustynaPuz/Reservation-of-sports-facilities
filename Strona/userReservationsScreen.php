@@ -113,10 +113,10 @@
         if (!empty($_SESSION['reservations'])) {
             echo "<h3>Aktywne rezerwacje:</h3><ul>";
             foreach ($_SESSION['reservations'] as $reservation) {
-                if (isset($reservation['Termin Kortu'], $reservation['Status'], $reservation['ID'], $reservation['Numer Kortu'])) {
+                if (isset($reservation['Termin Kortu'], $reservation['Status'], $reservation['ID'], $reservation['KortyNumer Kortu'])) {
                     echo "<li>";
                     echo "Rezerwacja na: " . htmlspecialchars($reservation['Termin Kortu']);
-                    echo ", Numer Kortu: " . htmlspecialchars($reservation['Numer Kortu']);
+                    echo ", Numer Kortu: " . htmlspecialchars($reservation['KortyNumer Kortu']);
                     echo ", Status: " . htmlspecialchars($reservation['Status']);
                     echo " - <a href='cancelReservation.php?reservationId=" . urlencode($reservation['ID']) . "&termin=" . urlencode($reservation['Termin Kortu']) . "&numerKortu=" . urlencode($reservation['Numer Kortu']) . "'>Anuluj</a>";
                     echo "</li>";
