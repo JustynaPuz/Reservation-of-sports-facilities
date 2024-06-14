@@ -58,12 +58,13 @@ if ($count > 0) {
     echo "Slot jest wolny - można dokonać rezerwacji.";
 
     // Kod do dodania rezerwacji do bazy danych
-    $insertSql = "INSERT INTO `Rezerwacja kortu tenisowego` (`Termin Kortu`, Status, `Użytkownik zalogowanyID`, `KortyNumer kortu`) VALUES (?, 'Aktywna', ?, ?)";
+    $insertSql = "INSERT INTO `Rezerwacja kortu tenisowego` (`Termin Kortu`, Status, `Użytkownik zalogowanyID`, `KortyNumer kortu`, `czas trwania`) VALUES (?, 'Aktywna', ?, ?, ?)";
     $insertStmt = $conn->prepare($insertSql);
-    $insertStmt->bind_param("sii", $startTime, $userId, $NumberOfTickets);
+    $insertStmt->bind_param("siii", $startTime, $userId, $NumberOfTickets, $duration);
     if ($insertStmt->execute()) {
         echo "Rezerwacja została dodana.";
         // Zmień zajętość na 1 dla odpowiednich 
+
         $updateSql = "UPDATE `Termin Kortu` SET `Zajętość` = 1 WHERE `Zajętość` = 0 AND `Termin` BETWEEN ? AND ? AND `Numer kortu` = ?";
         $updateStmt = $conn->prepare($updateSql);
         $updateStmt->bind_param("ssi", $startTime, $actualEndTime, $NumberOfTickets);
@@ -72,6 +73,9 @@ if ($count > 0) {
         } else {
             echo "Błąd podczas aktualizacji terminów: " . $conn->error;
         }
+
+
+
         $updateStmt->close();
     } else {
         echo "Błąd podczas dodawania rezerwacji: " . $conn->error;

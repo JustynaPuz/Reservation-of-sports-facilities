@@ -10,6 +10,11 @@ if (!preg_match("/^[0-9]{9}$/", $_POST["phoneNumber"])) {
     die("Valid phone number is required");
 }
 
+// Check if passwords match
+if ($_POST["password"] !== $_POST["password2"]) {
+    die("Passwords do not match");
+}
+
 
 $conn = require __DIR__ . "/DataBase.php";
 

@@ -90,8 +90,8 @@
     </div>
     <div class="sidebar">
         <a href="indexAfterLogin.html">Strona główna</a>
-        <a href="korty.html">Korty tenisowe</a>
-        <a href="lodowisko.html">Lodowisko</a>
+        <a href="korty.php">Korty tenisowe</a>
+        <a href="lodowisko.php">Lodowisko</a>
         <a href="userReservations.html" class="active">Rezerwacje</a>
         <a href="accountManagement.html">Profil</a>
         <a href="logout.php">Wyloguj</a>
