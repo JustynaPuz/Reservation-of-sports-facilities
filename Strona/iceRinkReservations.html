@@ -46,7 +46,6 @@
 
         .main-content {
             margin-left: 220px;
-            /* Adjusted for consistency */
             padding: 40px;
         }
 
@@ -58,6 +57,26 @@
             background-color: #e7e7e7;
             border: 1px solid #ccc;
         }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
     </style>
 </head>
 
@@ -67,14 +86,17 @@
     </div>
     <div class="sidebar">
         <a href="indexAfterLogin.html" class="active">Strona główna</a>
-        <a href="korty.html">Korty tenisowe</a>
-        <a href="lodowisko.html">Lodowisko</a>
+        <a href="korty.php">Korty tenisowe</a>
+        <a href="lodowisko.php">Lodowisko</a>
         <a href="userReservationsScreen.php">Rezerwacje</a>
         <a href="accountManagement.html">Profil</a>
         <a href="logout.php">Wyloguj</a>
     </div>
     <div class="main-content">
         <h2>Formularz rezerwacji biletów na lodowisko</h2>
+
+        <div id="message" class="message" style="display: none;"></div>
+
         <form action="iceRinkReservations.php" method="post">
             <div>
                 <label for="date">Data:</label>
@@ -98,10 +120,21 @@
             const date = params.get('date');
             const time = params.get('time');
             const numberOfTicket = 1;
+            const message = params.get('message');
             if (date && time) {
                 document.getElementById('date').value = date;
                 document.getElementById('time').value = time;
                 document.getElementById('numberOfTicket').value = numberOfTicket;
+            }
+            if (message) {
+                const messageDiv = document.getElementById('message');
+                messageDiv.innerText = message;
+                messageDiv.style.display = 'block';
+                if (message.includes('pomyślnie')) {
+                    messageDiv.classList.add('success');
+                } else {
+                    messageDiv.classList.add('error');
+                }
             }
         };
     </script>

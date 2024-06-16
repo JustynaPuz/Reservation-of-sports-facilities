@@ -1,18 +1,8 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$dbUsername = "AdamJustynaRezerwacje";
-$dbPassword = "Pwr1234BazyDanych";
-$dbname = "rezerwacjaObiektow";
+$conn = require __DIR__ . "/DataBase.php";
 
-// Nawiązanie połączenia z bazą danych
-$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbname);
-
-// Sprawdzenie połączenia
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 // Pobranie nazwy użytkownika z sesji
 $username = $_SESSION['username'];
 

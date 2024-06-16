@@ -20,7 +20,6 @@
             padding: 20px;
             text-align: center;
             font-size: 24px;
-            padding-left: 100px;
         }
 
         .sidebar {
@@ -46,19 +45,41 @@
         }
 
         .main-content {
-            margin-left: 300px;
-            padding: 20px;
+            margin-left: 220px;
+            padding: 40px;
         }
 
-        form>div {
+        form > div {
             margin-bottom: 15px;
-            /* Adds spacing between form fields */
         }
 
         input[readonly] {
-            background-color: #f0f0f0;
-            /* Makes read-only fields visually distinct */
+            background-color: #e7e7e7;
             border: 1px solid #ccc;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -69,14 +90,17 @@
     </div>
     <div class="sidebar">
         <a href="indexAfterLogin.html" class="active">Strona główna</a>
-        <a href="korty.html">Korty tenisowe</a>
-        <a href="lodowisko.html">Lodowisko</a>
+        <a href="korty.php">Korty tenisowe</a>
+        <a href="lodowisko.php">Lodowisko</a>
         <a href="userReservationsScreen.php">Rezerwacje</a>
         <a href="accountManagement.html">Profil</a>
         <a href="logout.php">Wyloguj</a>
     </div>
     <div class="main-content">
         <h1>Formularz rezerwacji kortu</h1>
+
+        <div id="message" class="message hidden"></div>
+
         <form action="tennisCourtsReservations.php" method="post">
             <div>
                 <label for="court">Numer kortu:</label>
@@ -91,20 +115,35 @@
                 <input type="text" id="time" name="time" readonly>
             </div>
             <div>
-                <label for="duration">Czas trwania (w minutach, np. 30, 60, 90):</label>
-                <input type="number" id="duration" name="duration" required min="30" max="90" step="30">
+                <label for="duration">Czas trwania (w minutach, np. 60, 120, 180):</label>
+                <input type="number" id="duration" name="duration" required min="60" max="180" step="60">
             </div>
             <button type="submit">Rezerwuj</button>
         </form>
     </div>
 
     <script>
-        // Skrypt do wypełniania formularza na podstawie parametrów z URL
         window.onload = function () {
             const params = new URLSearchParams(window.location.search);
-            document.getElementById('court').value = params.get('court');
-            document.getElementById('date').value = params.get('date');
-            document.getElementById('time').value = params.get('time');
+            const court = params.get('court');
+            const date = params.get('date');
+            const time = params.get('time');
+            const message = params.get('message');
+            if (court && date && time) {
+                document.getElementById('court').value = court;
+                document.getElementById('date').value = date;
+                document.getElementById('time').value = time;
+            }
+            if (message) {
+                const messageDiv = document.getElementById('message');
+                messageDiv.innerText = message;
+                messageDiv.style.display = 'block';
+                if (message.includes('pomyślnie')) {
+                    messageDiv.classList.add('success');
+                } else {
+                    messageDiv.classList.add('error');
+                }
+            }
         };
     </script>
 </body>

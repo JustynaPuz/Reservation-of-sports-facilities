@@ -1,18 +1,10 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$dbUsername = "AdamJustynaRezerwacje"; // Użyj unikalnych nazw zmiennych dla połączenia z bazą
-$dbPassword = "Pwr1234BazyDanych";
-$dbname = "rezerwacjaObiektow";
+$conn = require __DIR__ . "/DataBase.php";
 
-// Nawiązanie połączenia z bazą danych
-$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbname);
+// Pozostała część kodu...
 
-// Sprawdzenie połączenia
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 $message = '';
 
 // Przetwarzanie żądania POST

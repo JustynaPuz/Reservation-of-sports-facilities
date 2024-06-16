@@ -4,7 +4,7 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: 'rezerwacjaObiektow'
+      MYSQL_DATABASE: 'ObiektySportowe'
       MYSQL_USER: 'AdamJustynaRezerwacje'
       MYSQL_PASSWORD: 'Pwr1234BazyDanych'
       MYSQL_ROOT_PASSWORD: 'Pwr1234BazyDanych'

@@ -1,15 +1,8 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$dbUsername = "AdamJustynaRezerwacje";
-$dbPassword = "Pwr1234BazyDanych";
-$dbname = "rezerwacjaObiektow";
+$conn = require __DIR__ . "/DataBase.php";
 
-$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 $message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

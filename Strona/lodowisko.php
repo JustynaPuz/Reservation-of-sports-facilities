@@ -99,7 +99,7 @@
         <h1>Rezerwacja obiektów sportowych</h1>
     </div>
     <div class="sidebar">
-        <a href="indexAfterLogin.html">Strona główna</a>
+        <a href="indexAfterLogin.php">Strona główna</a>
         <a href="korty.php">Korty tenisowe</a>
         <a href="lodowisko.php" class="active">Lodowisko</a>
         <a href="userReservationsScreen.php">Rezerwacje</a>

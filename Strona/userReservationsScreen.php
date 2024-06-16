@@ -80,11 +80,59 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
     </style>
+    <script>
+        function cancelReservation(reservationId, termin, numerKortu, element) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `cancelReservation.php?reservationId=${reservationId}&termin=${termin}&numerKortu=${numerKortu}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message');
+                    if (response.success) {
+                        messageDiv.classList.add('success');
+                        messageDiv.textContent = response.message;
+                        element.parentElement.appendChild(messageDiv);
+                        setTimeout(() => {
+                            element.parentElement.remove(); // Usuwa rezerwację z listy po krótkim czasie
+                        }, 2000);
+                    } else {
+                        messageDiv.classList.add('error');
+                        messageDiv.textContent = response.message;
+                        element.parentElement.appendChild(messageDiv);
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
 </head>
 
 <body>
-    <?php session_start(); ?> <!-- Początek sesji -->
+    <?php 
+    session_start(); 
+    ?> <!-- Początek sesji -->
     <div class="header">
         <h1>Rezerwacja obiektów sportowych</h1>
     </div>
@@ -92,12 +140,20 @@
         <a href="indexAfterLogin.html">Strona główna</a>
         <a href="korty.php">Korty tenisowe</a>
         <a href="lodowisko.php">Lodowisko</a>
-        <a href="userReservations.html" class="active">Rezerwacje</a>
+        <a href="userReservations.php" class="active">Rezerwacje</a>
         <a href="accountManagement.html">Profil</a>
         <a href="logout.php">Wyloguj</a>
     </div>
     <div class="main-content">
         <h2>Zarządzaj swoimi rezerwacjami</h2>
+
+        <?php 
+        if (isset($_SESSION['message'])): ?>
+            <div class="message <?php echo strpos($_SESSION['message'], 'pomyślnie') !== false ? 'success' : 'error'; ?>">
+                <?php echo htmlspecialchars($_SESSION['message']); unset($_SESSION['message']); ?>
+            </div>
+        <?php endif; ?>
+
         <form action="userReservations.php" method="post">
             <div class="form-group">
                 <label for="reservationType">Wybierz typ rezerwacji:</label>
@@ -110,16 +166,46 @@
         </form>
 
         <?php
+         $conn = require __DIR__ . "/DataBase.php";
+
         if (!empty($_SESSION['reservations'])) {
             echo "<h3>Aktywne rezerwacje:</h3><ul>";
             foreach ($_SESSION['reservations'] as $reservation) {
-                if (isset($reservation['Termin Kortu'], $reservation['Status'], $reservation['ID'], $reservation['KortyNumer Kortu'])) {
-                    echo "<li>";
-                    echo "Rezerwacja na: " . htmlspecialchars($reservation['Termin Kortu']);
-                    echo ", Numer Kortu: " . htmlspecialchars($reservation['KortyNumer Kortu']);
-                    echo ", Status: " . htmlspecialchars($reservation['Status']);
-                    echo " - <a href='cancelReservation.php?reservationId=" . urlencode($reservation['ID']) . "&termin=" . urlencode($reservation['Termin Kortu']) . "&numerKortu=" . urlencode($reservation['Numer Kortu']) . "'>Anuluj</a>";
-                    echo "</li>";
+                if (isset($reservation['Termin Kortu'], $reservation['Status'], $reservation['ID'], $reservation['KortyNumer kortu'])) {
+                    // Sprawdzenie, czy rezerwacja kortu tenisowego istnieje
+                    $sql = "SELECT COUNT(*) FROM `Rezerwacja kortu tenisowego` WHERE `ID` = ? AND `Status` = 'Aktywna'";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $reservation['ID']);
+                    $stmt->execute();
+                    $stmt->bind_result($count);
+                    $stmt->fetch();
+                    $stmt->close();
+
+                    if ($count > 0) {
+                        echo "<li>";
+                        echo "Rezerwacja na: " . htmlspecialchars($reservation['Termin Kortu']);
+                        echo ", Numer Kortu: " . htmlspecialchars($reservation['KortyNumer kortu']);
+                        echo ", Status: " . htmlspecialchars($reservation['Status']);
+                        echo " - <a href='#' onclick=\"cancelReservation('" . urlencode($reservation['ID']) . "', '" . urlencode($reservation['Termin Kortu']) . "', '" . urlencode($reservation['KortyNumer kortu']) . "', this); return false;\">Anuluj</a>";
+                        echo "</li>";
+                    }
+                } elseif (isset($reservation['Termin lodowiska'], $reservation['Status'], $reservation['ID'])) {
+                    // Sprawdzenie, czy rezerwacja lodowiska istnieje
+                    $sql = "SELECT COUNT(*) FROM `Rezerwacja biletu na lodowisko` WHERE `ID` = ? AND `Status` = 'Aktywna'";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $reservation['ID']);
+                    $stmt->execute();
+                    $stmt->bind_result($count);
+                    $stmt->fetch();
+                    $stmt->close();
+
+                    if ($count > 0) {
+                        echo "<li>";
+                        echo "Rezerwacja na: " . htmlspecialchars($reservation['Termin lodowiska']);
+                        echo ", Status: " . htmlspecialchars($reservation['Status']);
+                        echo " - <a href='#' onclick=\"cancelReservation('" . urlencode($reservation['ID']) . "', '" . urlencode($reservation['Termin lodowiska']) . "', '', this); return false;\">Anuluj</a>";
+                        echo "</li>";
+                    }
                 } else {
                     echo "<li>Niekompletna informacja o rezerwacji.</li>";
                 }
@@ -128,8 +214,9 @@
         } else {
             echo "<p>Brak aktywnych rezerwacji.</p>";
         }
-        ?>
 
+        $conn->close();
+        ?>
     </div>
 </body>
 

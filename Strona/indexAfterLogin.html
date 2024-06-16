@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="HTML, CSS">
-    <meta name="description" content="Strona do rezerwacji kortow tenisowych i biletow na lodowisko">
-    <title>Rezerwacja obiektow sportowych</title>
+    <meta name="description" content="Strona do rezerwacji kortów tenisowych i biletów na lodowisko">
+    <title>Rezerwacja obiektów sportowych</title>
     <style>
         body {
             margin: 0;
@@ -46,8 +46,61 @@
         }
 
         .main-content {
-            margin-left: 300px;
+            margin-left: 240px;
             padding: 20px;
+        }
+
+        .facility-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .facility {
+            flex: 0 1 calc(50% - 20px); /* Dostosuj szerokość elementów do 50% szerokości kontenera minus marginesy */
+            margin: 10px;
+            box-sizing: border-box;
+        }
+
+        .facility img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .facility-caption {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #333;
         }
     </style>
 </head>
@@ -63,7 +116,6 @@
         <a href="userReservationsScreen.php">Rezerwacje</a>
         <a href="accountManagement.html">Profil</a>
         <a href="logout.php">Wyloguj</a>
-
     </div>
     <div class="main-content">
         <div class="welcome-message">
@@ -74,18 +126,56 @@
             </p>
             <p>Zarezerwuj swoje miejsce już dziś i ciesz się sportem bez ograniczeń!</p>
         </div>
-        div class="facility">
-        <h3 class="facility-caption">Korty Tenisowe</h3>
-        <img src="tennis-courts.jpg" alt="Korty Tenisowe">
-    </div>
+        <div class="facility-container">
+            <div class="facility">
+                <h3 class="facility-caption">Korty Tenisowe</h3>
+                <img src="images/korty.jpg" alt="Korty Tenisowe">
+            </div>
 
-    <div class="facility">
-        <h3 class="facility-caption">Sezonowe Lodowisko</h3>
-        <img src="ice-rink.jpg" alt="Sezonowe Lodowisko">
+            <div class="facility">
+                <h3 class="facility-caption">Sezonowe Lodowisko</h3>
+                <img src="images/lodowisko.png" alt="Sezonowe Lodowisko">
+            </div>
+        </div>
+        <h2>Cennik Rezerwacji</h2>
+        <table>
+            <tr>
+                <th>Rodzaj Rezerwacji</th>
+                <th>Czas Trwania</th>
+                <th>Cena</th>
+            </tr>
+            <tr>
+                <td>Kort Tenisowy</td>
+                <td>60 minut</td>
+                <td class="price">$20</td>
+            </tr>
+            <tr>
+                <td>Kort Tenisowy</td>
+                <td>120 minut</td>
+                <td class="price">$35</td>
+            </tr>
+            <tr>
+                <td>Kort Tenisowy</td>
+                <td>180 minut</td>
+                <td class="price">$50</td>
+            </tr>
+            <tr>
+                <td>Lodowisko</td>
+                <td>60 minut</td>
+                <td class="price">$15</td>
+            </tr>
+            <tr>
+                <td>Lodowisko</td>
+                <td>120 minut</td>
+                <td class="price">$25</td>
+            </tr>
+            <tr>
+                <td>Lodowisko</td>
+                <td>180 minut</td>
+                <td class="price">$40</td>
+            </tr>
+        </table>
     </div>
-    </div>
-
-
 </body>
 
 </html>
